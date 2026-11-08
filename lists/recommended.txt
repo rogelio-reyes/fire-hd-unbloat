@@ -1,0 +1,8 @@
+# RECOMMENDED: worth disabling once you have replacements (Play Store, a
+# browser, a launcher). Each line says what you lose.
+
+com.amazon.dee.app               # Alexa (lose: voice assistant)
+com.amazon.cloud9                # Silk browser (lose: default browser; install Chrome/Firefox first)
+com.amazon.kindle                # Kindle reading app (lose: Kindle books; reinstall from Play Store if wanted)
+com.amazon.unifiedshare          # Amazon share sheet
+com.amazon.tahoe                 # Amazon Kids (lose: kid profiles; skip if your kids use it)

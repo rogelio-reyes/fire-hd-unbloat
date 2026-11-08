@@ -1,0 +1,13 @@
+# AGGRESSIVE: read before using. These stop Amazon's own app store and
+# automatic Fire OS updates.
+#
+# Why you might want this: on 2016-2018 models, a Fire OS update can patch the
+# bootloader exploit. Blocking updates keeps the LineageOS path open.
+# Why you might not: no security updates from Amazon, and Amazon apps you keep
+# will stop updating. Recent Fire OS versions may refuse some of these; the
+# script will report that and move on.
+
+com.amazon.venezia                     # Amazon Appstore (lose: updates for Amazon apps)
+com.amazon.device.software.ota         # Fire OS update service
+com.amazon.device.software.ota.override
+com.amazon.kindle.otter.oobe.forced.ota # Forced update during setup

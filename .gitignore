@@ -1,0 +1,6 @@
+backups/
+apks/*.apk
+apks/*.apkm
+apks/*.xapk
+apks/*.apks
+.DS_Store

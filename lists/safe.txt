@@ -1,0 +1,17 @@
+# SAFE: standalone Amazon apps and ads. Disabling these doesn't affect the
+# system, your Amazon account or the ability to update the tablet.
+# Packages not present on your tablet are skipped automatically.
+
+com.amazon.kindle.kso            # Lock screen ads ("Special Offers")
+com.amazon.advertisingidsettings # Advertising ID settings
+com.amazon.mShop.android         # Amazon Shopping
+com.amazon.avod                  # Prime Video
+com.amazon.mp3                   # Amazon Music
+com.audible.application.kindle   # Audible
+com.amazon.photos                # Amazon Photos
+com.amazon.weather               # Weather
+com.goodreads.kindle             # Goodreads
+com.amazon.zico                  # Amazon Docs
+com.amazon.kor.demo              # Retail store demo
+com.amazon.ags.app               # GameCircle
+com.amazon.csapp                 # Help / Customer Service app

@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# A tiny fake `adb` that simulates a Fire HD 8 (2020) so the scripts can be
+# tested without a tablet. State lives in $FAKE_ADB_STATE (a directory).
+set -euo pipefail
+S="${FAKE_ADB_STATE:?set FAKE_ADB_STATE}"
+mkdir -p "$S"
+[[ -f "$S/packages" ]] || cat > "$S/packages" <<'EOF'
+com.amazon.firelauncher
+com.amazon.kindle.kso
+com.amazon.mShop.android
+com.amazon.avod
+com.amazon.photos
+com.amazon.dee.app
+com.amazon.cloud9
+com.amazon.kindle
+com.amazon.venezia
+com.amazon.device.software.ota
+com.android.settings
+EOF
+touch "$S/disabled" "$S/hidden" "$S/installed-apks"
+
+case "${1:-}" in
+  version) echo "Android Debug Bridge version 1.0.41 (fake)"; exit 0 ;;
+  devices) printf 'List of devices attached\n%s\tdevice\n\n' "${FAKE_ADB_DEVICE_STATE_SERIAL:-G0FAKE123}"; exit 0 ;;
+  install) shift; [[ "$1" == "-r" ]] && shift; basename "$1" >> "$S/installed-apks"; echo "Success"; exit 0 ;;
+  shell) shift ;;
+  *) echo "fake-adb: unsupported: $*" >&2; exit 1 ;;
+esac
+
+visible() { grep -vxF -f "$S/hidden" "$S/packages" || true; }
+
+case "$1 ${2:-}" in
+  "getprop ro.product.model")       echo "KFONWI" ;;
+  "getprop ro.build.version.name")  echo "Fire OS 7.3.2.9 (fake)" ;;
+  "getprop ro.build.version.release") echo "9" ;;
+  "getprop ro.product.cpu.abi")     echo "armeabi-v7a" ;;
+  "pm list")
+    case "${4:-}" in
+      -u) sed 's/^/package:/' "$S/packages" ;;
+      -d) sed 's/^/package:/' "$S/disabled" ;;
+      -e) visible | grep -vxF -f "$S/disabled" | sed 's/^/package:/' || true ;;
+      *)  visible | sed 's/^/package:/' ;;
+    esac ;;
+  "pm disable-user")
+    pkg="${5}"
+    if [[ "$pkg" == "com.amazon.device.software.ota" ]]; then
+      echo "Error: java.lang.SecurityException: Shell cannot change component state for $pkg"; exit 0
+    fi
+    echo "$pkg" >> "$S/disabled"; echo "Package $pkg new state: disabled-user" ;;
+  "pm uninstall")
+    pkg="${6}"; echo "$pkg" >> "$S/hidden"; echo "Success" ;;
+  "pm enable")
+    pkg="$3"
+    if grep -qx "$pkg" "$S/disabled"; then
+      grep -vx "$pkg" "$S/disabled" > "$S/d.tmp" || true; mv "$S/d.tmp" "$S/disabled"
+      echo "Package $pkg new state: enabled"
+    elif grep -qx "$pkg" "$S/packages"; then
+      echo "Package $pkg new state: enabled"
+    fi ;;
+  "cmd package")
+    if [[ "$3" == "install-existing" ]]; then
+      pkg="$4"
+      if grep -qx "$pkg" "$S/hidden"; then
+        grep -vx "$pkg" "$S/hidden" > "$S/h.tmp" || true; mv "$S/h.tmp" "$S/hidden"
+        echo "Package $pkg installed for user: 0"
+      fi
+    elif [[ "$3" == "query-activities" ]]; then
+      grep -qx "com.amazon.firelauncher" "$S/disabled" || echo "com.amazon.firelauncher/.Launcher"
+      echo "com.android.settings/.FallbackHome"
+      [[ -f "$S/has-launcher" ]] && echo "org.example.launcher/.Home"
+      true
+    fi ;;
+  *) echo "fake-adb: unsupported shell: $*" >&2; exit 1 ;;
+esac

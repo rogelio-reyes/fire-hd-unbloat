@@ -79,12 +79,13 @@ for p in "${todo[@]}"; do
     ok "hidden    $p   (disable was blocked; hidden for user 0 instead)"
     echo "hidden $p" >> "$log"
   else
-    warn "skipped   $p   ($out ${out2:-})"
+    # Keep only the first line; Fire OS prints a long Java stack trace.
+    warn "skipped   $p   (${out%%$'\n'*})"
     failed=$((failed + 1))
   fi
 done
 
 echo
-[[ $failed -gt 0 ]] && warn "$failed package(s) could not be changed. Fire OS protects some apps; that is normal."
+[[ $failed -gt 0 ]] && warn "$failed package(s) could not be changed. Fire OS protects some apps (on Fire OS 7.3.3.1 the lock screen ads and Help app are among them); that is normal."
 ok "Done. Restart the tablet to see the full effect: adb reboot"
 info "Undo anytime with ./scripts/restore.sh"

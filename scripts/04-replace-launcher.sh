@@ -46,12 +46,13 @@ printf '    %s\n' $others
 [[ "$mode" == "check" ]] && { info "Run with --apply to switch."; exit 0; }
 
 confirm "Disable Amazon's launcher so Home opens your new one?" || die "Cancelled."
-if dsh pm disable-user --user 0 "$AMZ" | grep -q disabled; then
+if dsh pm disable-user --user 0 "$AMZ" 2>&1 | grep -q disabled; then
   log="$BACKUPS_DIR/latest-${ANDROID_SERIAL}/changes.log"
   [[ -d "$(dirname "$log")" ]] && echo "disabled $AMZ" >> "$log"
   ok "Done. Press Home and choose your launcher, then 'Always'."
   info "Undo: ./scripts/04-replace-launcher.sh --undo"
 else
   warn "Fire OS blocked disabling the launcher on this version."
-  warn "Your new launcher still works; set it in Settings > Apps if offered."
+  warn "Pressing Home will still open Amazon's launcher. Open your new launcher"
+  warn "from the app list instead. See docs/troubleshooting.md."
 fi

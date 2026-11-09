@@ -4,7 +4,9 @@
 
 com.amazon.kindle.kso            # Lock screen ads ("Special Offers")
 com.amazon.advertisingidsettings # Advertising ID settings
-com.amazon.mShop.android         # Amazon Shopping
+com.amazon.mShop.android         # Amazon Shopping (some Fire OS versions)
+com.amazon.windowshop            # Amazon Shopping (Fire OS 7 on the 2020 HD 8)
+com.amazon.imdb.tv.mobile.app    # IMDb TV / Freevee
 com.amazon.avod                  # Prime Video
 com.amazon.mp3                   # Amazon Music
 com.audible.application.kindle   # Audible

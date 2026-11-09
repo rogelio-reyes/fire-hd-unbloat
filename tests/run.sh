@@ -41,9 +41,9 @@ touch "$S/has-launcher"
 check "launcher swap works with another launcher" 'grep -qx com.amazon.firelauncher "$S/disabled"'
 
 check "play store refuses with no APKs" '! ./scripts/03-install-play-store.sh >/dev/null 2>&1'
-for f in com.google.android.gsf_11.apk com.google.android.gms_24.apk com.google.android.vending_42.apk; do touch "apks/$f"; done
+for f in com.google.android.gsf_11.apk com.google.android.gms_24.apk com.android.vending_42.apk; do touch "apks/$f"; done
 ./scripts/03-install-play-store.sh > out.txt 2>&1
-check "play store installs in order" '[[ "$(tr "\n" " " < "$S/installed-apks")" == "com.google.android.gsf_11.apk com.google.android.gms_24.apk com.google.android.vending_42.apk " ]]'
+check "play store installs in order" '[[ "$(tr "\n" " " < "$S/installed-apks")" == "com.google.android.gsf_11.apk com.google.android.gms_24.apk com.android.vending_42.apk " ]]'
 
 ./scripts/restore.sh > out.txt 2>&1
 check "restore re-enables disabled apps" '[[ ! -s "$S/disabled" ]]'

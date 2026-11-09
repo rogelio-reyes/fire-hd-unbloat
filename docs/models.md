@@ -7,7 +7,7 @@ Find it on the tablet: **Settings > Device Options > About Fire Tablet**, or run
 | 6th | 2016 | KFGIWI | 5 | Yes, after bootloader unlock | Yes |
 | 7th | 2017 | KFDOWI | 5 | Yes, after bootloader unlock | Yes |
 | 8th | 2018 | KFKAWI | 6 / 7 | Yes, after bootloader unlock | Yes |
-| 10th | 2020 | KFONWI | 7 | No known unlock | Yes |
+| 10th | 2020 | KFONWI | 7 | No known unlock | Yes (tested on 7.3.3.1) |
 | 12th | 2022 / 2024 | varies | 8 | No known unlock | Yes (lightly tested) |
 
 Corrections welcome. Please open an issue with your model code and Fire OS version.

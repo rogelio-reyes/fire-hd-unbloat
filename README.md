@@ -1,6 +1,6 @@
 # fire-hd-unbloat
 
-Turn an Amazon Fire HD 8 into a cleaner Android tablet from a Mac: disable Amazon's apps and lock screen ads, install the Google Play Store and use a normal launcher. No root, no bricking risk, and every change can be undone.
+Turn an Amazon Fire HD 8 into a cleaner Android tablet from a Mac: disable Amazon's apps, install the Google Play Store and use a normal launcher. Some protected items (lock screen ads, Amazon's home button) can't be changed without root; see [docs/troubleshooting.md](docs/troubleshooting.md). No root, no bricking risk, and every change can be undone.
 
 Works on every Fire HD 8 generation. Should work on other Fire tablets too, since it only touches packages it finds.
 
@@ -22,7 +22,7 @@ Works on every Fire HD 8 generation. Should work on other Fire tablets too, sinc
 
 ```bash
 brew install android-platform-tools
-git clone https://github.com/<you>/fire-hd-unbloat.git
+git clone https://github.com/rogelio-reyes/fire-hd-unbloat.git
 cd fire-hd-unbloat
 chmod +x scripts/*.sh
 ```
@@ -36,7 +36,7 @@ chmod +x scripts/*.sh
 | 2 | `./scripts/02-debloat.sh` | Shows what it would disable (dry run) | No |
 | 2 | `./scripts/02-debloat.sh --tier recommended --apply` | Disables Amazon apps and ads | Yes, reversible |
 | 3 | `./scripts/03-install-play-store.sh` | Installs Google Play from APKs you download ([apks/README.md](apks/README.md)) | Yes |
-| 4 | `./scripts/04-replace-launcher.sh --apply` | Makes your new launcher the home screen | Yes, reversible |
+| 4 | `./scripts/04-replace-launcher.sh --apply` | Tries to disable Amazon's launcher so Home opens yours. Fire OS 7 blocks this, so open your launcher from the app list | Yes, reversible |
 
 **Tiers** in step 2 build on each other:
 
@@ -45,6 +45,10 @@ chmod +x scripts/*.sh
 - `aggressive`: adds the Amazon Appstore and Fire OS updates. Read [lists/aggressive.txt](lists/aggressive.txt) before using.
 
 Edit the files in `lists/` to choose exactly what to disable.
+
+## Tested on
+
+Fire HD 8 (2020, KFONWI), Fire OS 7.3.3.1, macOS bash 3.2. Disabled 10 of 12 `safe` packages; the lock screen ads and Help app are protected. Play Store, Play Services and Nova Launcher installed. Home still opens Amazon's launcher.
 
 ## Undo
 

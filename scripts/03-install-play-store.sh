@@ -35,7 +35,7 @@ steps=(
   "Google Account Manager|com\.google\.android\.gsf\.login|com.google.android.gsf.login|optional"
   "Google Services Framework|com\.google\.android\.gsf[_-]|com.google.android.gsf|required"
   "Google Play Services|com\.google\.android\.gms[_-]|com.google.android.gms|required"
-  "Google Play Store|com\.google\.android\.vending[_-]|com.google.android.vending|required"
+  "Google Play Store|com\.(google\.)?android\.vending[_-]|com.android.vending|required"
 )
 
 plan=()

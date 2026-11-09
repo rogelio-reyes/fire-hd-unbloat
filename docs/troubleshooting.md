@@ -20,3 +20,12 @@ Reboot and wait a few minutes; Play Services needs to finish setting up. If it s
 
 **Home button shows a black screen**
 `./scripts/04-replace-launcher.sh --undo` brings back Amazon's launcher.
+
+**Fire OS won't let me disable some apps or the launcher**
+On Fire OS 7.3.3.1 (Fire HD 8, 2020) these are protected and can't be changed over ADB without root: the lock screen ads (`com.amazon.kindle.kso`), the Help app (`com.amazon.csapp`) and Amazon's launcher (`com.amazon.firelauncher`). The scripts report them as skipped and change nothing. The lock screen ads usually stay.
+
+**Home still opens Amazon's launcher after installing another one**
+Fire OS 7 has no "default home app" setting. We also tried `cmd package set-home-activity` and a reboot; Home still went to Amazon's launcher. Open your launcher (for example Nova) from the app list instead. Replacing the home screen completely would need root, which this toolkit doesn't use.
+
+**Play Store APK is a `.apkm` bundle**
+`adb install` can't install bundles. Download a plain `.apk` variant, or unzip the bundle and run `adb install-multiple base.apk split_config.armeabi_v7a.apk split_config.en.apk` (use the split for your CPU ABI and language). Pick a Play Store version whose `minAPI` is at or below your Android version (API 28 for Android 9).

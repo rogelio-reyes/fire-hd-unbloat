@@ -15,6 +15,6 @@ Google's apps can't be redistributed, so download these yourself from a source y
 2. For Services Framework, pick the version for your Android base (Android 9 for Fire OS 7, Android 11 for Fire OS 8).
 3. For Play Services, pick the variant whose architecture matches your CPU ABI, and whose minimum Android version is at or below yours. Don't pick a `-wear`, `-tv` or `-auto` variant.
 4. Play Store: the newest version usually needs a newer Android than your tablet has (it was `minAPI34`, Android 14, in testing). Pick an older version whose `minAPI` in the filename is at or below yours: API 28 for Android 9, API 30 for Android 11. It updates itself once installed. The package name is `com.android.vending`.
-5. Download plain `.apk` files. APKMirror's `.apkm` bundles can't be installed with adb.
+5. Plain `.apk` files are best. APKMirror's `.apkm` bundles (also `.xapk` and `.apks`) work too: the script unpacks them and installs the base app plus the pieces for your tablet's CPU and language. If a folder has both for the same app, the plain `.apk` is used. Needs `unzip`, which macOS includes.
 
 Keep the default filenames (APKMirror's start with the package name), then run `./scripts/03-install-play-store.sh`.

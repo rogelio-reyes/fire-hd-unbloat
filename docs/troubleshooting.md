@@ -35,5 +35,5 @@ The scripts report these as skipped and change nothing. So on this model the `ag
 **Home still opens Amazon's launcher after installing another one**
 Fire OS 7 has no "default home app" setting. We also tried `cmd package set-home-activity`, two reboots and hiding the launcher with `pm uninstall -k --user 0`; Home still went to Amazon's launcher. Open your launcher (for example Nova) from the app list instead. Replacing the home screen completely would need root, which this toolkit doesn't use.
 
-**Play Store APK is a `.apkm` bundle**
-`adb install` can't install bundles. Download a plain `.apk` variant, or unzip the bundle and run `adb install-multiple base.apk split_config.armeabi_v7a.apk split_config.en.apk` (use the split for your CPU ABI and language). Pick a Play Store version whose `minAPI` is at or below your Android version (API 28 for Android 9).
+**My download is a `.apkm` bundle**
+`03-install-play-store.sh` handles `.apkm`, `.xapk` and `.apks` bundles: it unzips one to a temporary folder and runs `adb install-multiple` with the base app, the piece for your CPU (for example `armeabi_v7a`) and your language (English if there is none). If it fails, download a plain `.apk` instead. Whatever the format, pick a version whose `minAPI` is at or below your Android version (API 28 for Android 9).

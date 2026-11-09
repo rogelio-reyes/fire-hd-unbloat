@@ -23,6 +23,9 @@ case "${1:-}" in
   version) echo "Android Debug Bridge version 1.0.41 (fake)"; exit 0 ;;
   devices) printf 'List of devices attached\n%s\tdevice\n\n' "${FAKE_ADB_DEVICE_STATE_SERIAL:-G0FAKE123}"; exit 0 ;;
   install) shift; [[ "$1" == "-r" ]] && shift; basename "$1" >> "$S/installed-apks"; echo "Success"; exit 0 ;;
+  install-multiple) shift; [[ "$1" == "-r" ]] && shift
+    for f in "$@"; do basename "$f"; done | tr '\n' ' ' >> "$S/installed-multi"; echo >> "$S/installed-multi"
+    echo "Success"; exit 0 ;;
   shell) shift ;;
   *) echo "fake-adb: unsupported: $*" >&2; exit 1 ;;
 esac
@@ -34,6 +37,7 @@ case "$1 ${2:-}" in
   "getprop ro.build.version.name")  echo "Fire OS 7.3.2.9 (fake)" ;;
   "getprop ro.build.version.release") echo "9" ;;
   "getprop ro.product.cpu.abi")     echo "armeabi-v7a" ;;
+  "getprop persist.sys.locale")     echo "en-US" ;;
   "pm list")
     case "${4:-}" in
       -u) sed 's/^/package:/' "$S/packages" ;;

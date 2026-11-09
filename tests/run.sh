@@ -45,6 +45,19 @@ for f in com.google.android.gsf_11.apk com.google.android.gms_24.apk com.android
 ./scripts/03-install-play-store.sh > out.txt 2>&1
 check "play store installs in order" '[[ "$(tr "\n" " " < "$S/installed-apks")" == "com.google.android.gsf_11.apk com.google.android.gms_24.apk com.android.vending_42.apk " ]]'
 
+# Bundle support: replace the Play Store .apk with an .apkm containing base,
+# several CPU splits and several language splits. Only the tablet's pieces
+# (armeabi_v7a + en) should be installed.
+rm -f apks/com.android.vending_42.apk "$S/installed-apks" "$S/installed-multi"
+b="$work/bundle"; mkdir -p "$b"
+for f in base split_config.armeabi_v7a split_config.arm64_v8a split_config.x86 split_config.en split_config.de; do touch "$b/$f.apk"; done
+(cd "$b" && zip -q "$work/apks/com.android.vending_42.apkm" ./*.apk)
+./scripts/03-install-play-store.sh > out.txt 2>&1
+check "bundle: plain apks still installed first" '[[ "$(tr "\n" " " < "$S/installed-apks")" == "com.google.android.gsf_11.apk com.google.android.gms_24.apk " ]]'
+check "bundle: only this tablet's pieces installed" '[[ "$(tr -s " " < "$S/installed-multi" | sed "s/ *$//")" == "base.apk split_config.armeabi_v7a.apk split_config.en.apk" ]]'
+rm -f apks/com.android.vending_42.apkm
+check "bundle: missing Play Store still refused" '! ./scripts/03-install-play-store.sh >/dev/null 2>&1'
+
 ./scripts/restore.sh > out.txt 2>&1
 check "restore re-enables disabled apps" '[[ ! -s "$S/disabled" ]]'
 check "restore brings back hidden apps" '[[ ! -s "$S/hidden" ]]'

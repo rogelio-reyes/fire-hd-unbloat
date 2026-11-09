@@ -42,13 +42,17 @@ chmod +x scripts/*.sh
 
 - `safe`: ads, Shopping, Prime Video, Music, Audible, Photos and other standalone apps
 - `recommended`: adds Alexa, Silk, Kindle, Amazon Kids. Install replacements first.
-- `aggressive`: adds the Amazon Appstore and Fire OS updates. Read [lists/aggressive.txt](lists/aggressive.txt) before using.
+- `aggressive`: tries to add the Amazon Appstore and Fire OS updates. Newer Fire OS versions protect these, so it may change nothing extra. Read [lists/aggressive.txt](lists/aggressive.txt) before using.
 
 Edit the files in `lists/` to choose exactly what to disable.
 
 ## Tested on
 
-Fire HD 8 (2020, KFONWI), Fire OS 7.3.3.1, macOS bash 3.2. Disabled 10 of 12 `safe` packages; the lock screen ads and Help app are protected. Play Store, Play Services and Nova Launcher installed. Home still opens Amazon's launcher.
+Fire HD 8 (2020, KFONWI), Fire OS 7.3.3.1, macOS bash 3.2.
+
+- Disabled 14 Amazon packages: Alexa, Silk, Kindle, Kids, Prime Video, Music, Photos, Shopping, IMDb TV, Audible, Weather and others.
+- Fire OS protects the lock screen ads, Help app, Amazon Appstore, update service and Amazon's launcher. Disabling and hiding were both refused, so these stay. Home keeps opening Amazon's launcher; open your launcher from the app list.
+- Play Store, Play Services, Nova Launcher and Firefox installed fine.
 
 ## Undo
 
